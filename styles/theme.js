@@ -8,6 +8,6 @@ export const colors = {
     secondary: "#1c5480",
 };
 
-export const breakpoint = {
+export const breakpoints = {
     mobile: "500px",
 };

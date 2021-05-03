@@ -1,4 +1,4 @@
-import { fonts, colors } from "../../styles/theme";
+import { fonts, colors, breakpoints } from "../../styles/theme";
 export default function Layout({ children }) {
     return (
         <>
@@ -13,11 +13,17 @@ export default function Layout({ children }) {
                     align-items: center;
                 }
                 main {
-                    height: 90vh;
+                    height: 100%;
+                    width: 100%;
                     background-color: #fff;
                     border-radius: 20px;
-                    width: 360px;
                     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                }
+                @media (min-width: ${breakpoints.mobile}) {
+                    main {
+                        height: 90vh;
+                        width: ${breakpoints.mobile};
+                    }
                 }
             `}</style>
             <style jsx global>
