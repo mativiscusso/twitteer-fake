@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from 'react'
 
-function SvgComponent(props) {
-    return (
+function SvgComponent (props) {
+  return (
         <svg
             height={512}
             viewBox="0 0 24 24"
@@ -14,7 +14,7 @@ function SvgComponent(props) {
                 fill={props.fill}
             />
         </svg>
-    );
+  )
 }
 
-export default SvgComponent;
+export default SvgComponent

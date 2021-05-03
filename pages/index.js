@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import Layout from "../components/Layout";
-import { colors } from "../styles/theme";
-import Button from "../components/Button";
-import Github from "../components/Icons/Github";
-import { loginWithGithub, onAuthStateChanged } from "../firebase/client";
+import Layout from "components/Layout";
+import { colors } from "styles/theme";
+import Button from "components/Button";
+import Github from "components/Icons/Github";
+import { loginWithGithub, onAuthStateChanged } from "firebase/client";
+import Avatar from "components/Avatar";
 
 export default function Home() {
     const [user, setUser] = useState(null);
-    console.log(user);
     useEffect(() => {
         console.log(onAuthStateChanged(setUser));
         onAuthStateChanged(setUser);
@@ -53,7 +53,11 @@ export default function Home() {
                         </Button>
                     )}
                     {user && user.avatar && (
-                        <div className="user-info">{user.username}</div>
+                        <Avatar
+                            src={user.avatar}
+                            alt={user.username}
+                            text={user.username}
+                        />
                     )}
                 </section>
                 <style jsx>
@@ -71,9 +75,9 @@ export default function Home() {
                         }
                         h2 {
                             color: ${colors.secondary};
-                            font-size: 14px;
+                            font-size: 16px;
                             margin: 0;
-                            width: 80%;
+                            width: 60%;
                             text-align: center;
                         }
                     `}

@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import { getDisplayName } from "next/dist/next-server/lib/utils";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAreKidJ3vpnutkj8xJmggQbgnZKpF24FY",
@@ -19,6 +18,7 @@ export const loginWithGithub = async () => {
         const user = await firebase.auth().signInWithPopup(githubProvider);
         const { additionalUserInfo } = user;
         const { username, profile } = additionalUserInfo;
+        // eslint-disable-next-line camelcase
         const { avatar_url, blog } = profile;
         return {
             avatar: avatar_url,

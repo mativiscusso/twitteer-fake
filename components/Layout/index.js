@@ -1,6 +1,6 @@
-import styles, { globalStyles } from "./styles";
-export default function Layout({ children }) {
-    return (
+import styles, { globalStyles } from './styles'
+export default function Layout ({ children }) {
+  return (
         <>
             <div>
                 <main>{children}</main>
@@ -10,5 +10,5 @@ export default function Layout({ children }) {
                 {globalStyles}
             </style>
         </>
-    );
+  )
 }
