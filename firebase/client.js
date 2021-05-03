@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { getDisplayName } from "next/dist/next-server/lib/utils";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAreKidJ3vpnutkj8xJmggQbgnZKpF24FY",
@@ -10,16 +11,34 @@ const firebaseConfig = {
     measurementId: "G-ZP89ED564P",
 };
 
+firebase.apps.length === 0 && firebase.initializeApp(firebaseConfig);
+
 export const loginWithGithub = async () => {
-    firebase.initializeApp(firebaseConfig);
-    const githubProvider = new firebase.auth.GithubAuthProvider();
-    const user = await firebase.auth().signInWithPopup(githubProvider);
-    const { aditionalUserInfo } = user;
-    const { username, profile } = aditionalUserInfo;
-    const { avatarUrl, blog } = profile;
-    return {
-        avatar: avatarUrl,
-        username: username,
-        url: blog,
-    };
+    try {
+        const githubProvider = new firebase.auth.GithubAuthProvider();
+        const user = await firebase.auth().signInWithPopup(githubProvider);
+        const { additionalUserInfo } = user;
+        const { username, profile } = additionalUserInfo;
+        const { avatar_url, blog } = profile;
+        return {
+            avatar: avatar_url,
+            username: username,
+            url: blog,
+        };
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const onAuthStateChanged = (onChange) => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            const currentUser = {
+                username: user.displayName,
+                avatar: user.photoURL,
+                email: user.email,
+            };
+            onChange(currentUser);
+        }
+    });
 };
