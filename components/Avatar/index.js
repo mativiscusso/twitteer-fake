@@ -12,15 +12,14 @@ export default function Avatar({ src, alt, text }) {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    margin: 1rem;
                 }
                 div img {
                     border-radius: 50%;
-                    width: 60px;
-                    padding: 7px;
+                    width: 40px;
                 }
                 div strong {
                     color: ${colors.black};
+                    margin-left: 7px;
                 }
             `}</style>
         </>

@@ -7,20 +7,23 @@ import { colors } from "styles/theme";
 import Button from "components/Button";
 import Github from "components/Icons/Github";
 import { loginWithGithub, onAuthStateChanged } from "firebase/client";
-import Avatar from "components/Avatar";
+import { useRouter } from "next/router";
 
 export default function Home() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(undefined);
+    const router = useRouter();
+
     useEffect(() => {
-        console.log(onAuthStateChanged(setUser));
         onAuthStateChanged(setUser);
     }, []);
 
+    useEffect(() => {
+        user && router.replace("/home");
+    }, [user]);
+
     const handleClick = async () => {
         try {
-            const user = await loginWithGithub();
-            console.log(user);
-            setUser(user);
+            await loginWithGithub();
         } catch (error) {
             console.log(error);
         }
@@ -52,12 +55,8 @@ export default function Home() {
                             Login con Github
                         </Button>
                     )}
-                    {user && user.avatar && (
-                        <Avatar
-                            src={user.avatar}
-                            alt={user.username}
-                            text={user.username}
-                        />
+                    {user === undefined && (
+                        <img src="/spinner.gif" alt="spinner" />
                     )}
                 </section>
                 <style jsx>
