@@ -1,6 +1,6 @@
 import { colors } from "styles/theme";
 
-export default function Avatar({ src, alt, text }) {
+export default function Avatar({ src, alt, text, width = 60 }) {
     return (
         <>
             <div>
@@ -15,7 +15,7 @@ export default function Avatar({ src, alt, text }) {
                 }
                 div img {
                     border-radius: 50%;
-                    width: 40px;
+                    width: ${width}px;
                 }
                 div strong {
                     color: ${colors.black};

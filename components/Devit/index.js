@@ -1,4 +1,7 @@
 import Avatar from "components/Avatar";
+import Like from "components/Icons/Like";
+import Reuse from "components/Icons/reuse";
+
 import useTimeAgo from "hooks/useTimeAgo";
 
 export default function Devit({
@@ -8,9 +11,9 @@ export default function Devit({
     createdAt,
     likesCount,
     sharedCount,
+    img,
 }) {
     const timestamp = useTimeAgo(createdAt);
-
     return (
         <>
             <section>
@@ -21,12 +24,19 @@ export default function Devit({
                     <div>
                         <strong>{username}</strong>
                         <small> @{username} -</small>
-                        <date> {timestamp}</date>
+                        <span> {timestamp}</span>
                     </div>
                     <p>{content}</p>
+                    {img && <img src={img} />}
                     <div>
-                        <small>❤ {likesCount}</small>
-                        <small>➰ {sharedCount}</small>
+                        <small>
+                            <Like width={18} height={18} stroke="#bbb" />
+                            {likesCount}
+                        </small>
+                        <small>
+                            <Reuse width={18} height={18} stroke="#bbb" />
+                            {sharedCount}
+                        </small>
                     </div>
                 </article>
             </section>
@@ -38,18 +48,24 @@ export default function Devit({
                 }
                 section p {
                     margin: 0;
-                    line-height: 1.2;
-                    font-size: 14px;
+                    line-height: 1.5;
+                    font-size: 15px;
                 }
                 article:first-child {
                     margin-right: 12px;
                 }
-                article date {
+                article span {
                     font-size: 12px;
                     opacity: 0.8;
                 }
                 article small:first-child {
                     opacity: 0.7;
+                }
+                article img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 15px;
+                    margin: 16px 0;
                 }
             `}</style>
         </>

@@ -45,7 +45,7 @@ export const onAuthStateChanged = (onChange) => {
     });
 };
 
-export const addDevit = ({ avatar, id, username, content }) => {
+export const addDevit = ({ avatar, id, username, content, img }) => {
     return db.collection("devits").add({
         avatar,
         id,
@@ -54,12 +54,14 @@ export const addDevit = ({ avatar, id, username, content }) => {
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
         likesCount: 0,
         sharedCount: 0,
+        img,
     });
 };
 
 export const fetchLastestDevit = () => {
     return db
         .collection("devits")
+        .orderBy("createdAt", "desc")
         .get()
         .then(({ docs }) => {
             return docs.map((doc) => {
@@ -72,4 +74,10 @@ export const fetchLastestDevit = () => {
         .catch((err) => {
             console.log(err);
         });
+};
+
+export const uploadImage = (image) => {
+    const ref = firebase.storage().ref(`images/${image.name}`);
+    const task = ref.put(image);
+    return task;
 };

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -7,7 +6,6 @@ import { useRouter } from "next/router";
 import { loginWithGithub } from "firebase/client";
 import useUser from "hooks/useUser";
 
-import Layout from "components/Layout";
 import Button from "components/Button";
 import Github from "components/Icons/Github";
 import { colors } from "styles/theme";
@@ -29,12 +27,7 @@ export default function Home() {
     };
     return (
         <>
-            <Head>
-                <title>devter</title>
-                <meta name="description" content="Creado por soymev" />
-                <link rel="icon" href="/twitter-logo.svg" />
-            </Head>
-            <Layout>
+            <>
                 <section>
                     <Image
                         src="/twitter-logo.svg"
@@ -78,7 +71,7 @@ export default function Home() {
                         }
                     `}
                 </style>
-            </Layout>
+            </>
         </>
     );
 }
