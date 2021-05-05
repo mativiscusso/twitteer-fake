@@ -1,21 +1,20 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import Layout from "components/Layout";
-import { colors } from "styles/theme";
-import Button from "components/Button";
-import Github from "components/Icons/Github";
-import { loginWithGithub, onAuthStateChanged } from "firebase/client";
 import { useRouter } from "next/router";
 
-export default function Home() {
-    const [user, setUser] = useState(undefined);
-    const router = useRouter();
+import { loginWithGithub } from "firebase/client";
+import useUser from "hooks/useUser";
 
-    useEffect(() => {
-        onAuthStateChanged(setUser);
-    }, []);
+import Layout from "components/Layout";
+import Button from "components/Button";
+import Github from "components/Icons/Github";
+import { colors } from "styles/theme";
+
+export default function Home() {
+    const router = useRouter();
+    const user = useUser();
 
     useEffect(() => {
         user && router.replace("/home");
@@ -55,9 +54,7 @@ export default function Home() {
                             Login con Github
                         </Button>
                     )}
-                    {user === undefined && (
-                        <img src="/spinner.gif" alt="spinner" />
-                    )}
+                    {user && <img src="/spinner.gif" alt="spinner" />}
                 </section>
                 <style jsx>
                     {`

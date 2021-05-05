@@ -11,6 +11,7 @@ const firebaseConfig = {
 };
 
 firebase.apps.length === 0 && firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 export const loginWithGithub = async () => {
     try {
@@ -37,8 +38,38 @@ export const onAuthStateChanged = (onChange) => {
                 username: user.displayName,
                 avatar: user.photoURL,
                 email: user.email,
+                id: user.uid,
             };
             onChange(currentUser);
         }
     });
+};
+
+export const addDevit = ({ avatar, id, username, content }) => {
+    return db.collection("devits").add({
+        avatar,
+        id,
+        username,
+        content,
+        createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        likesCount: 0,
+        sharedCount: 0,
+    });
+};
+
+export const fetchLastestDevit = () => {
+    return db
+        .collection("devits")
+        .get()
+        .then(({ docs }) => {
+            return docs.map((doc) => {
+                const data = doc.data();
+                const id = doc.id;
+                const { createdAt } = data;
+                return { id, ...data, createdAt: +createdAt.toDate() };
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 };

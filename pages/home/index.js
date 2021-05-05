@@ -2,15 +2,20 @@ import { useState, useEffect } from "react";
 import Layout from "components/Layout";
 import Devit from "components/Devit";
 import { colors } from "styles/theme";
+import useUser from "hooks/useUser";
+import { fetchLastestDevit } from "firebase/client";
 
 export default function Timeline() {
     const [devits, setDevits] = useState([]);
+    const user = useUser();
+
     useEffect(() => {
-        fetch("http://localhost:3000/api/statuses/home_timeline")
-            .then((res) => res.json())
-            .then(setDevits)
-            .catch((err) => console.log(err));
-    }, []);
+        user &&
+            fetchLastestDevit()
+                .then(setDevits)
+                .catch((err) => console.log(err));
+    }, [user]);
+    console.log(devits, user);
     return (
         <Layout>
             <section>
@@ -18,14 +23,18 @@ export default function Timeline() {
                     <h1>Inicio</h1>
                 </header>
                 <article>
-                    {devits.map((devit) => (
-                        <Devit
-                            avatar={devit.avatar}
-                            username={devit.username}
-                            message={devit.message}
-                            key={devit.id}
-                        />
-                    ))}
+                    {devits &&
+                        devits.map((devit) => (
+                            <Devit
+                                avatar={devit.avatar}
+                                username={devit.username}
+                                content={devit.content}
+                                key={devit.id}
+                                createdAt={devit.createdAt}
+                                likesCount={devit.likesCount}
+                                sharedCount={devit.sharedCount}
+                            />
+                        ))}
                 </article>
                 <nav>
                     <span>icon</span>

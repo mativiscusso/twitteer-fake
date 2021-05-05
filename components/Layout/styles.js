@@ -26,6 +26,18 @@ export const globalStyles = css.global`
     input {
         font-family: ${fonts.base};
     }
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: ${colors.primary}ae;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: ${colors.secondary};
+    }
 `;
 export default css`
     div {
