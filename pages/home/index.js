@@ -24,7 +24,10 @@ export default function Timeline() {
         <>
             <section>
                 <header>
+                {user && 
                     <Avatar src={user.avatar} alt={user.username} width={35} />
+                
+                }
                     <h1>Inicio</h1>
                 </header>
                 <article>
