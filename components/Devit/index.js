@@ -3,6 +3,8 @@ import Like from "components/Icons/Like";
 import Reuse from "components/Icons/reuse";
 
 import useTimeAgo from "hooks/useTimeAgo";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Devit({
     avatar,
@@ -12,30 +14,41 @@ export default function Devit({
     likesCount,
     sharedCount,
     img,
+    id,
 }) {
     const timestamp = useTimeAgo(createdAt);
+    const router = useRouter();
+
+    const handleDevitClick = (e) => {
+        e.preventDefault();
+        router.push(`/status/${id}`);
+    };
     return (
         <>
-            <section>
+            <section onClick={handleDevitClick}>
                 <article>
-                    <Avatar src={avatar} alt={username} />
+                    <Avatar src={avatar} alt={username} width={50} />
                 </article>
                 <article>
                     <div>
                         <strong>{username}</strong>
                         <small> @{username} -</small>
-                        <span> {timestamp}</span>
+                        <Link href={`/status/${id}`}>
+                            <a>
+                                <time> {timestamp}</time>
+                            </a>
+                        </Link>
                     </div>
                     <p>{content}</p>
                     {img && <img src={img} />}
-                    <div>
+                    <div className="devit-buttons">
                         <small>
-                            <Like width={18} height={18} stroke="#bbb" />
-                            {likesCount}
+                            <Like width={20} height={20} stroke="#bbb" />
+                            <span>{likesCount}</span>
                         </small>
                         <small>
-                            <Reuse width={18} height={18} stroke="#bbb" />
-                            {sharedCount}
+                            <Reuse width={20} height={20} stroke="#bbb" />
+                            <span>{sharedCount}</span>
                         </small>
                     </div>
                 </article>
@@ -54,11 +67,17 @@ export default function Devit({
                 article:first-child {
                     margin-right: 12px;
                 }
+                section:hover {
+                    background-color: #f5f3f3;
+                    cursor: pointer;
+                }
                 article span {
                     font-size: 12px;
                     opacity: 0.8;
                 }
-                article small:first-child {
+                article time {
+                    font-size: 12px;
+
                     opacity: 0.7;
                 }
                 article img {
@@ -66,6 +85,22 @@ export default function Devit({
                     height: auto;
                     border-radius: 15px;
                     margin: 16px 0;
+                }
+                .devit-buttons {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-around;
+                }
+                .devit-buttons small {
+                    width: 40px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    color: #bbb;
+                    padding-top: 16px;
+                }
+                a:hover {
+                    text-decoration: underline;
                 }
             `}</style>
         </>

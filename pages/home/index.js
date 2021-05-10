@@ -19,15 +19,17 @@ export default function Timeline() {
                 .then(setDevits)
                 .catch((err) => console.log(err));
     }, [user]);
-    console.log(devits, user);
     return (
         <>
             <section>
                 <header>
-                {user && 
-                    <Avatar src={user.avatar} alt={user.username} width={35} />
-                
-                }
+                    {user && (
+                        <Avatar
+                            src={user.avatar}
+                            alt={user.username}
+                            width={35}
+                        />
+                    )}
                     <h1>Inicio</h1>
                 </header>
                 <article>
@@ -42,6 +44,7 @@ export default function Timeline() {
                                 likesCount={devit.likesCount}
                                 sharedCount={devit.sharedCount}
                                 img={devit.img}
+                                id={devit.id}
                             />
                         ))}
                 </article>
