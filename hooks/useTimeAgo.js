@@ -21,6 +21,7 @@ const getDateDiffs = (timestamp) => {
 
 export default function useTimeAgo(timestamp) {
     const [timeago, setTimeago] = useState(() => getDateDiffs(timestamp));
+    console.log(getDateDiffs(timestamp));
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -34,6 +35,5 @@ export default function useTimeAgo(timestamp) {
     const rtf = new Intl.RelativeTimeFormat("es", { style: "short" });
 
     const { value, unit } = timeago;
-
     return rtf.format(value, unit);
 }

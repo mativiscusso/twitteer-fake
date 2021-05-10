@@ -68,7 +68,7 @@ export const fetchLastestDevit = () => {
                 const data = doc.data();
                 const id = doc.id;
                 const { createdAt } = data;
-                return { id, ...data, createdAt: +createdAt.toDate() };
+                return { ...data, id, createdAt: +createdAt.toDate() };
             });
         })
         .catch((err) => {
